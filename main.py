@@ -39,6 +39,11 @@ def main():
         dt = clock.tick(60) / 1000 #Sets framerate to 60 and sets dt to number of seconds since clock.tick() was called.
         screen.fill((0,0,0))  #Fills screen with the color black
         updatable.update(dt)  #calls update() method for updatable group
+        for ast in asteroids_g:
+            ast.collision(player1)
+            if ast.collision(player1) == True:
+                print ("Game over!")
+                raise SystemExit
         for obj in drawable:
             obj.draw(screen)
         #player1.draw(screen)  #draw player triangle, replaced by obj.draw for optimization
