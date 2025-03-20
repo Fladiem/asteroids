@@ -15,15 +15,27 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    
+
+    updatable = pygame.sprite.Group()    #Creating groups
+    drawable = pygame.sprite.Group()    #my_group = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)   #Player.containers = group a, group b   
+                                                #Adds all instances of Player class to Groups in ()
     player1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    
     while True:
         for event in pygame.event.get(): #Allows the close button [X] on the window to close the window
             if event.type == pygame.QUIT:
                 return
-        screen.fill((0,0,0))  #Fills screen with the color black
-        player1.draw(screen)  #draw player triangle
-        pygame.display.flip()  #Refreshes the screen
         dt = clock.tick(60) / 1000 #Sets framerate to 60 and sets dt to number of seconds since clock.tick() was called.
+        screen.fill((0,0,0))  #Fills screen with the color black
+        updatable.update(dt)  #calls update() method for updatable group
+        for obj in drawable:
+            obj.draw(screen)
+        #player1.draw(screen)  #draw player triangle, replaced by obj.draw for optimization
+        pygame.display.flip()  #Refreshes the screen
+        
         """clock.tick(60)    #Sets framerate to 60
         dt = clock.get_time() / 1000  #sets dt to the number of seconds since clock.tick() was called"""
         
