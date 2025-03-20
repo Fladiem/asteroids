@@ -5,6 +5,8 @@ import pygame
 from constants import *
 from circleshape import CircleShape
 from player import *
+from asteroid import *
+from asteroid_field import AsteroidField
 
 def main():
     pygame.init()
@@ -19,10 +21,16 @@ def main():
 
     updatable = pygame.sprite.Group()    #Creating groups
     drawable = pygame.sprite.Group()    #my_group = pygame.sprite.Group()
+    asteroids_g = pygame.sprite.Group() # group for Asteroids(CircleShape) class
 
     Player.containers = (updatable, drawable)   #Player.containers = group a, group b   
                                                 #Adds all instances of Player class to Groups in ()
+    Asteroid.containers = (asteroids_g, updatable, drawable)
+
+    AsteroidField.containers = (updatable)
+    
     player1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    asteroidfield1 = AsteroidField()
     
     while True:
         for event in pygame.event.get(): #Allows the close button [X] on the window to close the window
