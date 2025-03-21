@@ -22,12 +22,17 @@ def main():
     updatable = pygame.sprite.Group()    #Creating groups
     drawable = pygame.sprite.Group()    #my_group = pygame.sprite.Group()
     asteroids_g = pygame.sprite.Group() # group for Asteroids(CircleShape) class
+    shots = pygame.sprite.Group() # Group for Shot(CircleShape) class
 
     Player.containers = (updatable, drawable)   #Player.containers = group a, group b   
                                                 #Adds all instances of Player class to Groups in ()
     Asteroid.containers = (asteroids_g, updatable, drawable)
 
     AsteroidField.containers = (updatable)
+
+    Shot.containers = (updatable, drawable)
+
+
     
     player1 = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield1 = AsteroidField()
@@ -39,11 +44,19 @@ def main():
         dt = clock.tick(60) / 1000 #Sets framerate to 60 and sets dt to number of seconds since clock.tick() was called.
         screen.fill((0,0,0))  #Fills screen with the color black
         updatable.update(dt)  #calls update() method for updatable group
+        for astb in asteroids_g:
+            for bul in shots:
+                bul_co = bul.collision(astb)
+                if bul_co == True:
+                    astb.kill()
+                    bul.kill()
+
         for ast in asteroids_g:
-            ast.collision(player1)
-            if ast.collision(player1) == True:
+            p1_co = ast.collision(player1)
+            if p1_co == True:
                 print ("Game over!")
-                raise SystemExit
+                raise SystemExit  #temporarily disabled for testing
+        
         for obj in drawable:
             obj.draw(screen)
         #player1.draw(screen)  #draw player triangle, replaced by obj.draw for optimization
