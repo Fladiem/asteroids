@@ -55,8 +55,9 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt
 
     def shoot(self, positionx, positiony, radius):
-        #if self.timer > 0:    #Behavior consistently inconsistent, can be here or in def update()?
-            #return
+        if self.timer > 0:    #Behavior consistently inconsistent, can be here or in def update()?
+            return              #Less prone to shooting too many bullets when in both shoot() and update()
+        
         new_shot = Shot(positionx, positiony, radius)  #does not seem to actually use positiony, but argument is required for Shot's super().__init__
         new_shot.velocity = (pygame.Vector2(0, 1).rotate(self.rotation)) * PLAYER_SHOOT_SPEED
         self.timer += PLAYER_SHOOT_COOLDOWN
