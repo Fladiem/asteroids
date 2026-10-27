@@ -8,6 +8,7 @@ from circleshape import CircleShape
 from player import *
 from asteroid import *
 from asteroid_field import AsteroidField
+from logger import log_state
 
 def main():
     pygame.init()
@@ -37,6 +38,7 @@ def main():
     asteroidfield1 = AsteroidField()
     
     while True:
+        log_state()
         for event in pygame.event.get(): #Allows the close button [X] on the window to close the window
             if event.type == pygame.QUIT:
                 print ("Asteroids! has successfully closed")
